@@ -44,7 +44,7 @@ module Uniqid
     LOCAL_ID_LEN = 7
     MAX_LOCAL_NUM = -1 ^ (-1 << LOCAL_ID_LEN)
 
-    @last_timestamp = -1 # Save the last time stamp
+    @last_timestamp = -1 # Save the last timestamp
     @sequence = 0 # Initial value of serial number
 
     # Prevent the generation time is smaller than the previous time(due to issues such as NTP callback),
@@ -56,7 +56,7 @@ module Uniqid
     end
 
     # @return worker_id[int] 64 bits
-    def work_value(value)
+    def worker_value(value)
       # Handling parameter exception
       value = 0 if value.to_i > MAX_WORKER_NUM || value.to_i.negative?
 
@@ -81,9 +81,9 @@ module Uniqid
     end
 
     # Generate ID
-    def generate_id(work_value, server_value, timestamp = nil)
+    def generate_id(worker_value, server_value, timestamp = nil)
       server_value = server_value(server_value)
-      work_value = work_value(work_value)
+      worker_value = worker_value(worker_value)
 
       # The reserved position is temporarily random, shifted by 7 bits to the left
       bak_value = (rand(MAX_BAK_NUM) << LOCAL_ID_LEN)
@@ -121,7 +121,7 @@ module Uniqid
       # Save the difference of timestamp(current timestamp - start timestamp)
       local_timestamp -= TIMESTAMP_START
 
-      (local_timestamp << (TOTAL_LEN - TIMESTAMP_LEN)) | server_value | work_value | bak_value | sequence
+      (local_timestamp << (TOTAL_LEN - TIMESTAMP_LEN)) | server_value | worker_value | bak_value | sequence
     end
 
     # Reverse check timestamp
