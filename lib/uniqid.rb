@@ -81,7 +81,7 @@ module Uniqid
     end
 
     # Generate ID
-    def generate_id(worker_value, server_value, timestamp = nil)
+    def generate(worker_value, server_value, timestamp = nil)
       server_value = server_value(server_value)
       worker_value = worker_value(worker_value)
 
@@ -130,4 +130,9 @@ module Uniqid
       Time.at(timestamp + TIMESTAMP_START / 1000.0)
     end
   end
+end
+
+# To inherit from ActiveRecord::Base and encapsulate into class for easy calling
+class ID < ActiveRecord::Base
+  include Uniqid
 end
