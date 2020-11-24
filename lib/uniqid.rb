@@ -5,7 +5,11 @@ require 'uniqid/version'
 # ID uniform generation rules, using SnowFlake algorithm, composed of 64 bits
 # | 40 bits: Timestamp (millisecond) | 9 bits: WORKER_ID | 6 bits: SERVER_ID | 2 bits: reserved | 7 bits: serial number|
 # VERSION = 1.0.0, Release: 2018-03-08
-# Usage: Uniqid.generate_id(work_id, server_id)
+# Usage:
+# Gemfile => gem 'uniqid'
+# Commandline => $ bundle install
+# ApplicationRecord => include Uniqid
+# before the object of model being created => UniqID.generate(worker_id, server_id)
 module Uniqid
   class Error < StandardError; end
 
@@ -81,7 +85,7 @@ module Uniqid
     end
 
     # Generate ID
-    def generate_id(worker_value, server_value, timestamp = nil)
+    def generate(worker_value, server_value, timestamp = nil)
       server_value = server_value(server_value)
       worker_value = worker_value(worker_value)
 
@@ -130,4 +134,9 @@ module Uniqid
       Time.at(timestamp + TIMESTAMP_START / 1000.0)
     end
   end
+end
+
+# To inherit from ActiveRecord::Base and encapsulate into class for easy calling in Model
+class UniqID < ActiveRecord::Base
+  include Uniqid
 end
