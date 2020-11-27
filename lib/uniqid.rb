@@ -8,8 +8,7 @@ require 'uniqid/version'
 # Usage:
 # Gemfile => gem 'uniqid'
 # Commandline => $ bundle install
-# ApplicationRecord => include Uniqid
-# before the object of model being created => UniqID.generate(worker_id, server_id)
+# ApplicationRecord =>  UniqID.generate(worker_id, server_id)
 module Uniqid
   class Error < StandardError; end
 

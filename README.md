@@ -1,8 +1,6 @@
 # Uniqid
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/uniqid`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+'Uniqid' is a distributed unique ID generator inspired by Twitter's Snowflake.
 
 ## Installation
 
@@ -22,7 +20,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# app/models/application_record.rb
+
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+  before_create :set_uniqid
+
+  def set_uniqid
+
+    # TODO: get your worker_id and server_id
+
+    self.id = UniqID.generate(worker_id, server_id)
+  end
+end
+```
 
 ## Development
 
@@ -32,7 +44,15 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/uniqid. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/uniqid/blob/master/CODE_OF_CONDUCT.md).
+1.Fork it ( https://github.com/ChanKerwin/uniqid/fork )
+
+2.Create your feature branch (git checkout -b my-new-feature)
+
+3.Commit your changes (git commit -am 'Add some feature')
+
+4.Push to the branch (git push origin my-new-feature)
+
+5.Create a new Pull Request
 
 
 ## License
@@ -41,4 +61,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Uniqid project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/uniqid/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Uniqid project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ChanKerwin/uniqid/blob/main/CODE_OF_CONDUCT.md).
